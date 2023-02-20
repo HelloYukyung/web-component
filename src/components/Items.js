@@ -8,22 +8,33 @@ export default class Items extends Component {
     const { items } = this.state;
     return `
       <ul>
-        ${items.map((item) => `<li>${item}</li>`).join("")}
+        ${items
+          .map(
+            (item, key) => `
+          <li>
+            ${item}
+            <button class="deleteBtn" data-index="${key}">삭제</button>
+          </li>
+        `
+          )
+          .join("")}
       </ul>
-      <button>추가</button>
+      <button class="addBtn">추가</button>
     `;
   }
 
   setEvent() {
-    this.$target.querySelector("button").addEventListener("click", () => {
+    this.$target.querySelector(".addBtn").addEventListener("click", () => {
       const { items } = this.state;
       this.setState({ items: [...items, `item${items.length + 1}`] });
     });
+
+    this.$target.querySelectorAll(".deleteBtn").forEach((deleteBtn) =>
+      deleteBtn.addEventListener("click", ({ target }) => {
+        const items = [...this.state.items];
+        items.splice(target.dataset.index, 1);
+        this.setState({ items });
+      })
+    );
   }
 }
-
-// 반복이 일어난다. ---> 오버라이딩
-// 클레스로 선언했을 때의 장점 ---> 재사용성 증가 & 코드의 유지보수가 쉬워진다.
-// OOP :  구현과 역할을 분리!
-// 사용법까지 같이 알아봐주면 좋겠다ㅋ
-// 생성자는 뭐하는 애인가
