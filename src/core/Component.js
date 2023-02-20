@@ -8,6 +8,7 @@ export default class Component {
     this.$target = $target;
     this.setup();
     this.render();
+    this.setEvent();
   }
   // method
   setup() {}
@@ -16,7 +17,7 @@ export default class Component {
   }
   render() {
     this.$target.innerHTML = this.template();
-    this.setEvent();
+    // this.setEvent();
   }
   setEvent() {}
   setState(newState) {
